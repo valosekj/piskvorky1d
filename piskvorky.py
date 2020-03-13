@@ -5,14 +5,18 @@ def tah_hrace(retezec,symbol_hrac):
 
     # Smycka pro zadani pozice
     while True:
-        cislo_pole = int(input('Jsi na tahu. Zadej cislo pole (0-19): '))
-        if cislo_pole >= 0 and cislo_pole <= 19:
-            if retezec[cislo_pole] != '-':
-                print('Toto pole je již obsazeno, zkus to znova.')
-            else:
-                break
+        try:
+            cislo_pole = int(input('Jsi na tahu. Zadej cislo pole (0-{}): '.format(len(retezec)-1)))
+        except ValueError:      # kontrola zda bylo zadano opravdu cislo
+            print('Nezadal jsi cislo, zkus to znova: ')
         else:
-            print('Spatna odpoved, zkus to znova.')
+            if cislo_pole >= 0 and cislo_pole <= len(retezec)-1:
+                if retezec[cislo_pole] != '-':
+                    print('Toto pole je již obsazeno, zkus to znova.')
+                else:
+                    break
+            else:
+                print('Cislo mimo rozsah, zkus to znova: ')
 
     retezec = retezec[:cislo_pole] + symbol_hrac + retezec[cislo_pole + 1:]
     return retezec
@@ -45,7 +49,12 @@ def stav_hry(stav):
 # Funkce která stridave vola tah_hrace a tah_pocitace
 def piskvorky1d():
 
-    retezec = '-' * 20
+    delka_pole = 10
+    if delka_pole <= 0:
+        print('Delka pole je < 0. Hra nemuze zacit.')
+        exit()
+
+    retezec = '-' * delka_pole
 
     symbol_pocitace = 'o'
     symbol_hrac = 'x'

@@ -5,7 +5,7 @@ def tah_pocitace(retezec,symbol_pocitace):
 
     # Smycka pro zadani pozice
     while True:
-        cislo_pole = randrange(0,20)
+        cislo_pole = randrange(0,len(retezec))
         if retezec[cislo_pole] == '-':
             break
 
