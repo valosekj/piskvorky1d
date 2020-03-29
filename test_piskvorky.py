@@ -1,8 +1,16 @@
-# Run this script in terminal:  python -m pytest -vs test_piskvorky.py
-# (option -s for pytest has to be included to allow input)
+# Replace user input by monkeypatch
+# Inspiration - https://www.linuxjournal.com/content/testing-your-code-pythons-pytest-part-ii
 
 from piskvorky import tah_hrace
+from io import StringIO
 
-def test_tah_hrace():
+# create object simulating user input (\n - has to be included - it simulates new line)
+mock_input = StringIO('0\n')
+
+def test_tah_hrace(monkeypatch):
+
+    # replace user input
+    monkeypatch.setattr('sys.stdin',mock_input)
+
     assert tah_hrace('-------', 'x') == 'x------'
 
